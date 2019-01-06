@@ -22,7 +22,7 @@ namespace TaxiFare.Prediction
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var conn = ConnectionMultiplexer.Connect("localhost:6379,allowAdmin=true");
+            var conn = ConnectionMultiplexer.Connect(Configuration["REDIS"]);
             var ml = new MLContext(0);
             
             services.AddSingleton<IConnectionMultiplexer>(c => conn);

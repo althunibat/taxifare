@@ -25,11 +25,8 @@ namespace TaxiFare.Prediction.Controllers
             _prediction = prediction;
         }
 
-
-
-        // POST api/values
-        [HttpPost("m2")]
-        public IActionResult Post2([FromBody] TaxiTrip trip)
+        [HttpPost]
+        public IActionResult Post([FromBody] TaxiTrip trip)
         {
             // Create prediction engine related to the loaded trained model
             var function = _prediction.MakePredictionFunction<TaxiTrip, TaxiTripFarePrediction>(_mlContext);

@@ -15,13 +15,14 @@ namespace TaxiFare.Trainer
 {
     internal class Program
     {
-        private static readonly ConnectionMultiplexer Redis = ConnectionMultiplexer.Connect("localhost:6379,allowAdmin=true");
+        private static ConnectionMultiplexer Redis;
 
         private static async Task Main(string[] args)
         {
             if (!await IsValid(args)) return;
             var trainingDataFile = args[0];
             var testDataFile = args[1];
+            Redis = ConnectionMultiplexer.Connect(args[2]);
             //Create ML Context with seed for repeteable/deterministic results
             var mlContext = new MLContext(0);
 
@@ -123,7 +124,7 @@ namespace TaxiFare.Trainer
         private static async Task<bool> IsValid(IReadOnlyList<string> args)
         {
             // args of zero is the training data path.
-            if (args == null || args.Count < 2)
+            if (args == null || args.Count < 3)
             {
                 await Console.Out.WriteLineAsync("please pass training & test data files (csv) paths");
                 return false;
@@ -135,7 +136,7 @@ namespace TaxiFare.Trainer
             }
             if (!File.Exists(args[1]))
             {
-                await Console.Out.WriteLineAsync($"test data file (csv) path is invalid: {args[0]}");
+                await Console.Out.WriteLineAsync($"test data file (csv) path is invalid: {args[1]}");
                 return false;
             }
             return true;

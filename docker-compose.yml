@@ -1,15 +1,24 @@
 version: '3.4'
 
 services:
-  taxifare.trainer:
-    image: taxifaretrainer
+  trainer:
+    image: trainer
     build:
       context: .
       dockerfile: TaxiFare.Trainer/Dockerfile
+    command: ["Data/taxi-fare-train.csv","Data/taxi-fare-test.csv","redis:6379,allowAdmin=true"]
 
-  taxifare.prediction:
-    image: taxifareprediction
+  prediction:
+    image: prediction
     build:
       context: .
       dockerfile: TaxiFare.Prediction/Dockerfile
+    environment:
+      - REDIS=redis:6379,allowAdmin=true 
+    ports:
+      - "8080:80"
+  
+  redis:
+    image: redis:alpine
+    command: ["redis-server","--appendonly", "yes"]
 

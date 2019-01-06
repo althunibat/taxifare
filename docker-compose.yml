@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  taxifare.trainer:
+    image: taxifaretrainer
+    build:
+      context: .
+      dockerfile: TaxiFare.Trainer/Dockerfile
+
+  taxifare.prediction:
+    image: taxifareprediction
+    build:
+      context: .
+      dockerfile: TaxiFare.Prediction/Dockerfile
+

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TaxiFare.Trainer": {
+      "commandName": "Project",
+      "commandLineArgs": "Data/taxi-fare-train.csv Data/taxi-fare-test.csv"
+    }
+  }
+}
